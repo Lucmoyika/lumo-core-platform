@@ -18,13 +18,6 @@ class CoreServiceProvider extends ModuleServiceProvider
     protected string $nameLower = 'core';
 
     /**
-     * Command classes to register.
-     *
-     * @var string[]
-     */
-    // protected array $commands = [];
-
-    /**
      * Provider classes to register.
      *
      * @var string[]
@@ -35,12 +28,20 @@ class CoreServiceProvider extends ModuleServiceProvider
     ];
 
     /**
-     * Define module schedules.
-     * 
-     * @param $schedule
+     * Register translations with the correct namespace so that
+     * __('core::messages.key') resolves properly.
      */
-    // protected function configureSchedules(Schedule $schedule): void
-    // {
-    //     $schedule->command('inspire')->hourly();
-    // }
+    protected function registerTranslations(): void
+    {
+        $langPath = resource_path('lang/modules/' . $this->nameLower);
+        $sourceLangPath = module_path($this->name, 'lang');
+
+        if (is_dir($langPath)) {
+            $this->loadTranslationsFrom($langPath, $this->nameLower);
+            $this->loadJsonTranslationsFrom($langPath);
+        } else {
+            $this->loadTranslationsFrom($sourceLangPath, $this->nameLower);
+            $this->loadJsonTranslationsFrom($sourceLangPath);
+        }
+    }
 }

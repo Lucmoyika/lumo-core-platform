@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Core\Http\Controllers\CoreController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('cores', CoreController::class)->names('core');
+Route::group(['prefix' => 'core', 'as' => 'core.'], function () {
+    Route::get('/', [CoreController::class, 'home'])->name('home');
+    Route::get('/features', [CoreController::class, 'features'])->name('features');
+    Route::get('/pricing', [CoreController::class, 'pricing'])->name('pricing');
+    Route::get('/contact', [CoreController::class, 'contact'])->name('contact');
+    Route::post('/contact', [CoreController::class, 'sendContact'])->name('contact.send');
 });
