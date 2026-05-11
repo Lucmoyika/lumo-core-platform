@@ -2,7 +2,7 @@
 
 namespace Modules\Identity\Providers;
 
-use Nwidart\Modules\Support\ModuleServiceProvider;
+use App\Support\Modules\ModuleServiceProvider;
 
 class IdentityServiceProvider extends ModuleServiceProvider
 {

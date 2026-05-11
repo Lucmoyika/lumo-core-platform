@@ -2,7 +2,7 @@
 
 namespace Modules\Communication\Providers;
 
-use Nwidart\Modules\Support\ModuleServiceProvider;
+use App\Support\Modules\ModuleServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
 
 class CommunicationServiceProvider extends ModuleServiceProvider
