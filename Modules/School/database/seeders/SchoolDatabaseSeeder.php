@@ -3,14 +3,16 @@
 namespace Modules\School\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\School\Models\AcademicProgram;
 
 class SchoolDatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // $this->call([]);
+        if (AcademicProgram::query()->exists()) {
+            return;
+        }
+
+        AcademicProgram::factory()->count(3)->create();
     }
 }

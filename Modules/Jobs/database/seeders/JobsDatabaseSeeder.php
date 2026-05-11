@@ -3,14 +3,16 @@
 namespace Modules\Jobs\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Jobs\Models\JobListing;
 
 class JobsDatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // $this->call([]);
+        if (JobListing::query()->exists()) {
+            return;
+        }
+
+        JobListing::factory()->count(3)->create();
     }
 }

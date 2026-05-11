@@ -1,58 +1,100 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Lumo Core Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Plateforme SaaS modulaire (Laravel + nwidart/laravel-modules) orientée **site public + portail d’authentification + backoffice ERP + API** pour chaque module métier.
 
-## About Laravel
+## Stack actuelle du dépôt
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Laravel Framework: `13.x`
+- PHP requis par le code actuel: `^8.3`
+- MySQL, Redis, Horizon, Sanctum, Spatie Permission, Laravel Modules
+- Front: Blade, Tailwind, Bootstrap, Alpine
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+> ⚠️ Demande cible du prompt: Laravel 11 + PHP 8.2.  
+> Le dépôt est actuellement en Laravel 13 / PHP 8.3, donc une migration complète de version reste à planifier et exécuter en chantier dédié.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Modules présents
 
-## Learning Laravel
+- Core
+- Identity
+- School
+- University
+- Companies
+- Jobs
+- Ecommerce
+- Payment
+- Logistics
+- Communication
+- Analytics
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Ce qui est déjà en place
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Architecture modulaire par module (routes web/api, contrôleurs, providers, seeders)
+- Authentification web + API (Identity + Sanctum)
+- RBAC global via Spatie Permissions
+- Middleware global de locale (`SetLocale`)
+- Middleware sécurité headers (`SecurityHeaders`)
+- Middleware audit (`AuditLog`)
+- Entrée auth unifiée ajoutée: `/login`, `/register`, `/forgot-password`
+- Entrées portail/ERP ajoutées par module (routes `portal` et `erp` sous auth)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## État d’implémentation vs prompt
 
-## Agentic Development
+Le squelette modulaire est en place, mais le prompt complet décrit un périmètre **très large** (ERP complet par module, PWA offline/push, temps réel avancé, SEO multilingue complet, workflows métiers détaillés School/University/etc.).
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Ce dépôt fournit aujourd’hui une **base solide** et structurée, mais il reste du développement fonctionnel important pour atteindre 100% du cahier des charges.
+
+---
+
+## Cloner, installer et démarrer en local
+
+### 1) Cloner
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/Lucmoyika/lumo-core-platform.git
+cd lumo-core-platform
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2) Prérequis
 
-## Contributing
+- PHP 8.3 (actuel du dépôt)
+- Composer
+- Node.js + npm
+- MySQL 8
+- Redis
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3) Installation
 
-## Code of Conduct
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Configurer ensuite `.env` (DB, REDIS, MAIL, etc.), puis:
 
-## Security Vulnerabilities
+```bash
+php artisan migrate --seed
+npm install
+npm run build
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4) Démarrage local
 
-## License
+Option simple:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan serve
+npm run dev
+```
+
+Option process group (serveur + queue + logs + vite):
+
+```bash
+composer run dev
+```
+
+### 5) Tests
+
+```bash
+php artisan test
+```

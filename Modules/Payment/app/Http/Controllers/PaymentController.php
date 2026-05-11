@@ -3,54 +3,72 @@
 namespace Modules\Payment\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Modules\Payment\Http\Requests\StoreWalletTransactionRequest;
+use Modules\Payment\Http\Requests\UpdateWalletTransactionRequest;
+use Modules\Payment\Http\Resources\WalletTransactionResource;
+use Modules\Payment\Models\WalletTransaction;
+use Modules\Payment\Services\WalletTransactionService;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(protected WalletTransactionService $service)
     {
-        return view('payment::index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(Request $request)
     {
-        return view('payment::create');
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return WalletTransactionResource::collection($this->service->paginate($request->integer('per_page', 12)));
+        }
+
+        return view('payment::index', $this->service->publicData());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request) {}
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
+    public function portal()
     {
-        return view('payment::show');
+        return view('payment::portal', $this->service->portalData(Auth::user()));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function erp()
     {
-        return view('payment::edit');
+        return view('payment::erp', $this->service->erpData());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id) {}
+    public function store(StoreWalletTransactionRequest $request): WalletTransactionResource
+    {
+        $this->authorize('create', WalletTransaction::class);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) {}
+        return new WalletTransactionResource($this->service->create($request->validated()));
+    }
+
+    public function show(Request $request, int $id)
+    {
+        $record = $this->service->findOrFail($id);
+
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return new WalletTransactionResource($record);
+        }
+
+        return view('payment::index', array_merge($this->service->publicData(), ['focusRecord' => $record]));
+    }
+
+    public function update(UpdateWalletTransactionRequest $request, int $id): WalletTransactionResource
+    {
+        $record = $this->service->findOrFail($id);
+        $this->authorize('update', $record);
+
+        return new WalletTransactionResource($this->service->update($id, $request->validated()));
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $record = $this->service->findOrFail($id);
+        $this->authorize('delete', $record);
+        $this->service->delete($id);
+
+        return response()->json(['message' => 'Deleted']);
+    }
 }
