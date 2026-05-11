@@ -3,54 +3,72 @@
 namespace Modules\School\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Modules\School\Http\Requests\StoreAcademicProgramRequest;
+use Modules\School\Http\Requests\UpdateAcademicProgramRequest;
+use Modules\School\Http\Resources\AcademicProgramResource;
+use Modules\School\Models\AcademicProgram;
+use Modules\School\Services\AcademicProgramService;
 
 class SchoolController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(protected AcademicProgramService $service)
     {
-        return view('school::index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(Request $request)
     {
-        return view('school::create');
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return AcademicProgramResource::collection($this->service->paginate($request->integer('per_page', 12)));
+        }
+
+        return view('school::index', $this->service->publicData());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request) {}
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
+    public function portal()
     {
-        return view('school::show');
+        return view('school::portal', $this->service->portalData(Auth::user()));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function erp()
     {
-        return view('school::edit');
+        return view('school::erp', $this->service->erpData());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id) {}
+    public function store(StoreAcademicProgramRequest $request): AcademicProgramResource
+    {
+        $this->authorize('create', AcademicProgram::class);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) {}
+        return new AcademicProgramResource($this->service->create($request->validated()));
+    }
+
+    public function show(Request $request, int $id)
+    {
+        $record = $this->service->findOrFail($id);
+
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return new AcademicProgramResource($record);
+        }
+
+        return view('school::index', array_merge($this->service->publicData(), ['focusRecord' => $record]));
+    }
+
+    public function update(UpdateAcademicProgramRequest $request, int $id): AcademicProgramResource
+    {
+        $record = $this->service->findOrFail($id);
+        $this->authorize('update', $record);
+
+        return new AcademicProgramResource($this->service->update($id, $request->validated()));
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $record = $this->service->findOrFail($id);
+        $this->authorize('delete', $record);
+        $this->service->delete($id);
+
+        return response()->json(['message' => 'Deleted']);
+    }
 }

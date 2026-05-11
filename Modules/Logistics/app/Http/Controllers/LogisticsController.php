@@ -3,54 +3,72 @@
 namespace Modules\Logistics\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Modules\Logistics\Http\Requests\StoreDeliveryShipmentRequest;
+use Modules\Logistics\Http\Requests\UpdateDeliveryShipmentRequest;
+use Modules\Logistics\Http\Resources\DeliveryShipmentResource;
+use Modules\Logistics\Models\DeliveryShipment;
+use Modules\Logistics\Services\DeliveryShipmentService;
 
 class LogisticsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(protected DeliveryShipmentService $service)
     {
-        return view('logistics::index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(Request $request)
     {
-        return view('logistics::create');
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return DeliveryShipmentResource::collection($this->service->paginate($request->integer('per_page', 12)));
+        }
+
+        return view('logistics::index', $this->service->publicData());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request) {}
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
+    public function portal()
     {
-        return view('logistics::show');
+        return view('logistics::portal', $this->service->portalData(Auth::user()));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function erp()
     {
-        return view('logistics::edit');
+        return view('logistics::erp', $this->service->erpData());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id) {}
+    public function store(StoreDeliveryShipmentRequest $request): DeliveryShipmentResource
+    {
+        $this->authorize('create', DeliveryShipment::class);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) {}
+        return new DeliveryShipmentResource($this->service->create($request->validated()));
+    }
+
+    public function show(Request $request, int $id)
+    {
+        $record = $this->service->findOrFail($id);
+
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return new DeliveryShipmentResource($record);
+        }
+
+        return view('logistics::index', array_merge($this->service->publicData(), ['focusRecord' => $record]));
+    }
+
+    public function update(UpdateDeliveryShipmentRequest $request, int $id): DeliveryShipmentResource
+    {
+        $record = $this->service->findOrFail($id);
+        $this->authorize('update', $record);
+
+        return new DeliveryShipmentResource($this->service->update($id, $request->validated()));
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        $record = $this->service->findOrFail($id);
+        $this->authorize('delete', $record);
+        $this->service->delete($id);
+
+        return response()->json(['message' => 'Deleted']);
+    }
 }

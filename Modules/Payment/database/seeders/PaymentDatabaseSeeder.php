@@ -3,14 +3,16 @@
 namespace Modules\Payment\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Payment\Models\WalletTransaction;
 
 class PaymentDatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // $this->call([]);
+        if (WalletTransaction::query()->exists()) {
+            return;
+        }
+
+        WalletTransaction::factory()->count(3)->create();
     }
 }

@@ -3,14 +3,16 @@
 namespace Modules\Logistics\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Logistics\Models\DeliveryShipment;
 
 class LogisticsDatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // $this->call([]);
+        if (DeliveryShipment::query()->exists()) {
+            return;
+        }
+
+        DeliveryShipment::factory()->count(3)->create();
     }
 }
