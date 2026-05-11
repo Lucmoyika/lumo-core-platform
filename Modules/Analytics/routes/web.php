@@ -3,6 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Analytics\Http\Controllers\AnalyticsController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('analytics', AnalyticsController::class)->names('analytics');
+Route::prefix('analytics')->as('analytics.')->group(function () {
+    Route::get('/', [AnalyticsController::class, 'index'])->name('home');
 });

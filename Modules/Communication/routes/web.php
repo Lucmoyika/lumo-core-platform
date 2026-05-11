@@ -3,6 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Communication\Http\Controllers\CommunicationController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('communications', CommunicationController::class)->names('communication');
+Route::prefix('communication')->as('communication.')->group(function () {
+    Route::get('/', [CommunicationController::class, 'index'])->name('home');
 });

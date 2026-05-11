@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Jobs\Http\Controllers\JobsController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('jobs', JobsController::class)->names('jobs');
+Route::prefix('jobs')->as('jobs.')->group(function () {
+    Route::get('/', [JobsController::class, 'index'])->name('home');
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/dashboard/recruiter', [JobsController::class, 'index'])->name('recruiter.dashboard');
+    });
 });

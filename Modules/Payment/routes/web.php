@@ -3,6 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Payment\Http\Controllers\PaymentController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('payments', PaymentController::class)->names('payment');
+Route::prefix('payment')->as('payment.')->group(function () {
+    Route::get('/', [PaymentController::class, 'index'])->name('home');
 });
