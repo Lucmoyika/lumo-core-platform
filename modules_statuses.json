@@ -1,0 +1,13 @@
+{
+    "Core": true,
+    "Identity": true,
+    "School": true,
+    "University": true,
+    "Companies": true,
+    "Jobs": true,
+    "Ecommerce": true,
+    "Payment": true,
+    "Logistics": true,
+    "Communication": true,
+    "Analytics": true
+}
