@@ -14,7 +14,7 @@ class IdentityServiceProvider extends ModuleServiceProvider
         RouteServiceProvider::class,
     ];
 
-    public function registerTranslations(): void
+    protected function registerTranslations(): void
     {
         $langPath = resource_path('lang/modules/' . $this->nameLower);
         $sourceLangPath = module_path($this->name, 'lang');

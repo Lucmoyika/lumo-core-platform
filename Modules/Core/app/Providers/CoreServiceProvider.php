@@ -31,7 +31,7 @@ class CoreServiceProvider extends ModuleServiceProvider
      * Register translations with the correct namespace so that
      * __('core::messages.key') resolves properly.
      */
-    public function registerTranslations(): void
+    protected function registerTranslations(): void
     {
         $langPath = resource_path('lang/modules/' . $this->nameLower);
         $sourceLangPath = module_path($this->name, 'lang');

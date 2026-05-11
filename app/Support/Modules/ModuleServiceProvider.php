@@ -38,7 +38,7 @@ abstract class ModuleServiceProvider extends ServiceProvider
         }
     }
 
-    public function registerTranslations(): void
+    protected function registerTranslations(): void
     {
         $langPath = resource_path('lang/modules/'.$this->nameLower);
 
