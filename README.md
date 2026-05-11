@@ -4,13 +4,12 @@ Plateforme SaaS modulaire (Laravel + nwidart/laravel-modules) orientée **site p
 
 ## Stack actuelle du dépôt
 
-- Laravel Framework: `13.x`
-- PHP requis par le code actuel: `^8.3`
+- Laravel Framework: `11.x`
+- PHP requis par le code actuel: `^8.2`
 - MySQL, Redis, Horizon, Sanctum, Spatie Permission, Laravel Modules
 - Front: Blade, Tailwind, Bootstrap, Alpine
 
-> ⚠️ Demande cible du prompt: Laravel 11 + PHP 8.2.  
-> Le dépôt est actuellement en Laravel 13 / PHP 8.3, donc une migration complète de version reste à planifier et exécuter en chantier dédié.
+> ✅ Le dépôt est aligné sur Laravel 11 et PHP 8.2.
 
 ## Modules présents
 
@@ -56,7 +55,7 @@ cd lumo-core-platform
 
 ### 2) Prérequis
 
-- PHP 8.3 (actuel du dépôt)
+- PHP 8.2 (actuel du dépôt)
 - Composer
 - Node.js + npm
 - MySQL 8
