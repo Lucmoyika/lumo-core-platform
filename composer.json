@@ -39,11 +39,14 @@
             "Modules\\Logistics\\": "Modules/Logistics/app/",
             "Modules\\Payment\\": "Modules/Payment/app/",
             "Modules\\School\\": "Modules/School/app/",
+            "Modules\\School\\Database\\Factories\\": "Modules/School/database/factories/",
+            "Modules\\School\\Database\\Seeders\\": "Modules/School/database/seeders/",
             "Modules\\University\\": "Modules/University/app/"
         }
     },
     "autoload-dev": {
         "psr-4": {
+            "Modules\\School\\Tests\\": "Modules/School/tests/",
             "Tests\\": "tests/"
         }
     },

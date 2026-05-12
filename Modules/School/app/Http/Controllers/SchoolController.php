@@ -3,10 +3,12 @@
 namespace Modules\School\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\School\Http\Requests\StoreAcademicProgramRequest;
+use Modules\School\Http\Requests\StoreAdmissionRequest;
 use Modules\School\Http\Requests\UpdateAcademicProgramRequest;
 use Modules\School\Http\Resources\AcademicProgramResource;
 use Modules\School\Models\AcademicProgram;
@@ -14,6 +16,8 @@ use Modules\School\Services\AcademicProgramService;
 
 class SchoolController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(protected AcademicProgramService $service)
     {
     }
@@ -37,11 +41,33 @@ class SchoolController extends Controller
         return view('school::erp', $this->service->erpData());
     }
 
-    public function store(StoreAcademicProgramRequest $request): AcademicProgramResource
+    public function admission()
+    {
+        return view('school::admission', $this->service->publicData());
+    }
+
+    public function admissionSubmit(StoreAdmissionRequest $request)
+    {
+        // Future: persist admission record, send notification email, etc.
+        return redirect()
+            ->route('school.admission.confirmed')
+            ->with('admission', $request->validated());
+    }
+
+    public function admissionConfirmed()
+    {
+        return view('school::admission-confirmed', [
+            'module' => $this->service->module(),
+        ]);
+    }
+
+    public function store(StoreAcademicProgramRequest $request): \Illuminate\Http\JsonResponse
     {
         $this->authorize('create', AcademicProgram::class);
 
-        return new AcademicProgramResource($this->service->create($request->validated()));
+        return (new AcademicProgramResource($this->service->create($request->validated())))
+            ->response()
+            ->setStatusCode(201);
     }
 
     public function show(Request $request, int $id)
