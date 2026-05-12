@@ -43,6 +43,6 @@
     </section>
     <section class="panel">
         <h2 style="margin-top:0;">Micro-interactions</h2>
-        <div data-vue-component="payment-insights" data-props='@json(["accent" => $module["accent"], "title" => $module["label"], "features" => $module["features"]])'></div>
+        <div data-insights-component="payment-insights" data-props='@json(["accent" => $module["accent"], "title" => $module["label"], "features" => $module["features"]])'></div>
     </section>
 </x-payment::layouts.master>

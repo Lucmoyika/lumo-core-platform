@@ -32,4 +32,10 @@
         </div>
     </div>
 </div>
+
+<div class="mt-4" data-insights-component="core-insights" data-props='@json([
+    "title" => "Core Platform",
+    "accent" => "#0ea5e9",
+    "features" => ["Site public", "SSO/Auth", "Portails multi-modules", "API unifiée"]
+])'></div>
 @endsection

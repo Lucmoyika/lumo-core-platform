@@ -459,7 +459,7 @@
             <div class="col-lg-6">
                 <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:1.25rem;padding:2rem;">
                     <div style="font-weight:700;color:white;margin-bottom:1rem;">Stack Technique</div>
-                    @foreach(['Laravel 11 (PHP 8.2)','MySQL 8 + Redis','Spatie RBAC Permissions','Laravel Sanctum API','Laravel Horizon Queues','Vue.js 3 + Alpine.js','Tailwind CSS + Bootstrap 5','nwidart/laravel-modules'] as $tech)
+                    @foreach(['Laravel 11 (PHP 8.2)','SQLite / MySQL / PostgreSQL','Spatie RBAC Permissions','Laravel Sanctum API','Laravel Horizon Queues','Blade + Alpine.js + JavaScript natif','Tailwind CSS + Bootstrap 5','nwidart/laravel-modules'] as $tech)
                     <div class="d-flex align-items-center gap-2 py-2" style="border-bottom:1px solid rgba(255,255,255,0.05);">
                         <i class="bi bi-check-circle-fill" style="color:#22c55e;font-size:0.9rem;"></i>
                         <span style="color:#94a3b8;font-size:0.9rem;">{{ $tech }}</span>
