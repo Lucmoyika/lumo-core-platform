@@ -11,7 +11,6 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.51",
-        "laravel/horizon": "^5.46",
         "laravel/sanctum": "^4.3",
         "laravel/tinker": "^3.0",
         "nwidart/laravel-modules": "^11.1.10",
