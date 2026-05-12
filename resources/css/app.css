@@ -5,7 +5,6 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 @source '../../Modules/**/resources/views/**/*.blade.php';
-@source '../../Modules/**/resources/js/**/*.vue';
 
 @theme {
     --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
@@ -18,4 +17,47 @@
 
 body {
     min-height: 100vh;
+}
+
+.insights-card {
+    --accent: #6366f1;
+    display: grid;
+    gap: 1rem;
+    background: rgba(15, 23, 42, 0.88);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+}
+
+.insights-eyebrow {
+    margin: 0 0 0.5rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+}
+
+.insights-title {
+    margin: 0 0 0.35rem;
+    color: #fff;
+    font-size: 1.4rem;
+}
+
+.insights-description {
+    margin: 0;
+    color: #cbd5e1;
+}
+
+.insights-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.insights-pill {
+    padding: 0.6rem 0.8rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 18%, #0f172a);
+    color: #fff;
+    border: 1px solid color-mix(in srgb, var(--accent) 48%, transparent);
 }

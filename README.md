@@ -5,9 +5,11 @@ Plateforme SaaS modulaire (Laravel + nwidart/laravel-modules) orientée **site p
 ## Stack actuelle du dépôt
 
 - Laravel Framework: `11.x`
-- PHP requis par le code actuel: `^8.2`
-- MySQL, Redis, Horizon, Sanctum, Spatie Permission, Laravel Modules
-- Front: Blade, Tailwind, Bootstrap, Alpine
+- PHP requis: `8.2`
+- Composer: `2.x`
+- Node.js: `18.x` + npm `9.x`
+- Base de données: SQLite (par défaut) ou MySQL/PostgreSQL
+- Front: Blade, Tailwind, Bootstrap, Alpine, JavaScript natif (sans Vue.js)
 
 > ✅ Le dépôt est aligné sur Laravel 11 et PHP 8.2.
 
@@ -55,21 +57,21 @@ cd lumo-core-platform
 
 ### 2) Prérequis
 
-- PHP 8.2 (actuel du dépôt)
-- Composer
-- Node.js + npm
-- MySQL 8
-- Redis
+- PHP 8.2
+- Composer 2.x
+- Node.js 18.x
+- npm 9.x
+- SQLite (par défaut) ou MySQL/PostgreSQL
 
 ### 3) Installation
 
 ```bash
 composer install
-cp .env.example .env
+cp .env.example .env # Windows (CMD): copy .env.example .env
 php artisan key:generate
 ```
 
-Configurer ensuite `.env` (DB, REDIS, MAIL, etc.), puis:
+Configurer ensuite `.env` (DB, MAIL, etc.), puis:
 
 ```bash
 php artisan migrate --seed

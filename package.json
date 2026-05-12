@@ -6,15 +6,15 @@
         "build": "vite build",
         "dev": "vite"
     },
-    "devDependencies": {
-        "@tailwindcss/vite": "^4.0.0",
-        "concurrently": "^9.0.1",
-        "laravel-vite-plugin": "^3.1",
-        "tailwindcss": "^4.0.0",
-        "vite": "^8.0.0",
-        "@vitejs/plugin-vue": "^6.0.6"
+    "engines": {
+        "node": ">=18 <19",
+        "npm": ">=9 <10"
     },
-    "dependencies": {
-        "vue": "^3.5.34"
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.1.7",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^1.2.0",
+        "tailwindcss": "^4.1.7",
+        "vite": "^5.4.19"
     }
 }
