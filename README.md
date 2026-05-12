@@ -10,8 +10,10 @@ Plateforme SaaS modulaire (Laravel + nwidart/laravel-modules) orientée **site p
 - Node.js: `18.x` + npm `9.x`
 - Base de données: SQLite (par défaut) ou MySQL/PostgreSQL
 - Front: Blade, Tailwind, Bootstrap, Alpine, JavaScript natif (sans Vue.js)
+- Queue: worker Laravel standard (pas de dépendance `ext-pcntl` obligatoire pour l'installation locale)
 
 > ✅ Le dépôt est aligné sur Laravel 11 et PHP 8.2.
+> ✅ `composer install` fonctionne en local Windows/XAMPP sans exiger `ext-pcntl`.
 
 ## Modules présents
 
