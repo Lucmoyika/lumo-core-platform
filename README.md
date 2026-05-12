@@ -7,7 +7,7 @@ Plateforme SaaS modulaire (Laravel + nwidart/laravel-modules) orientée **site p
 - Laravel Framework: `11.x`
 - PHP requis: `8.2`
 - Composer: `2.x`
-- Node.js: `18.x` + npm `9.x`
+- Node.js: `>=18` + npm `>=9`
 - Base de données: SQLite (par défaut) ou MySQL/PostgreSQL
 - Front: Blade, Tailwind, Bootstrap, Alpine, JavaScript natif (sans Vue.js)
 - Queue: worker Laravel standard (pas de dépendance `ext-pcntl` obligatoire pour l'installation locale)
@@ -61,8 +61,8 @@ cd lumo-core-platform
 
 - PHP 8.2
 - Composer 2.x
-- Node.js 18.x
-- npm 9.x
+- Node.js >=18
+- npm >=9
 - SQLite (par défaut) ou MySQL/PostgreSQL
 
 ### 3) Installation
@@ -95,6 +95,42 @@ Option process group (serveur + queue + logs + vite):
 ```bash
 composer run dev
 ```
+
+### 4.1) Correction du warning `npm WARN EBADENGINE` (captures)
+
+#### Capture 1 — Avant correction
+
+```txt
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: undefined,
+npm warn EBADENGINE   required: { node: '>=18 <19', npm: '>=9 <10' },
+npm warn EBADENGINE   current: { node: 'v22.11.0', npm: '11.6.2' }
+npm warn EBADENGINE }
+```
+
+#### Capture 2 — Correction appliquée
+
+Fichier modifié: `package.json`
+
+```json
+"engines": {
+  "node": ">=18",
+  "npm": ">=9"
+}
+```
+
+#### Capture 3 — Vérification après correction
+
+```txt
+$ npm install
+up to date, audited 57 packages in 628ms
+
+$ npm run build
+vite v5.4.21 building for production...
+✓ built in 157ms
+```
+
+> Note: les messages `npm audit` (vulnérabilités) sont séparés du warning `EBADENGINE`.
 
 ### 5) Tests
 
