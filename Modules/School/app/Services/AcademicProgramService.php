@@ -17,7 +17,7 @@ class AcademicProgramService extends BaseModuleService
     public function create(array $attributes): Model
     {
         if (empty($attributes['slug'])) {
-            $attributes['slug'] = Str::slug(($attributes['name'] ?? 'programme').'-'.Str::random(6));
+            $attributes['slug'] = $this->generateSlug($attributes['name'] ?? $this->moduleKey);
         }
 
         return parent::create($attributes);
@@ -26,9 +26,16 @@ class AcademicProgramService extends BaseModuleService
     public function update(int|string $id, array $attributes): Model
     {
         if (empty($attributes['slug'])) {
-            $attributes['slug'] = Str::slug(($attributes['name'] ?? 'programme').'-'.Str::random(6));
+            // Preserve the existing slug to avoid breaking URLs unnecessarily.
+            $existing = $this->repository->findOrFail($id);
+            $attributes['slug'] = $existing->slug;
         }
 
         return parent::update($id, $attributes);
+    }
+
+    private function generateSlug(string $base): string
+    {
+        return Str::slug($base.'-'.Str::random(6));
     }
 }
