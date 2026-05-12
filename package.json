@@ -7,8 +7,8 @@
         "dev": "vite"
     },
     "engines": {
-        "node": ">=18 <23",
-        "npm": ">=9 <12"
+        "node": ">=18",
+        "npm": ">=9"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.1.7",
