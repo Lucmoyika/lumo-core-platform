@@ -7,7 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $pageTitle ?? $module['label'].' · '.config('app.name') }}</title>
     <meta name="description" content="{{ $pageDescription ?? $module['summary'] }}">
+    @if(file_exists(public_path('build/manifest.json')))
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endif
     <style>
         :root { --module-accent: {{ $module['accent'] }}; }
         body { margin:0; font-family:ui-sans-serif,system-ui,sans-serif; background:linear-gradient(180deg,#020617 0%,#0f172a 100%); color:#e2e8f0; }
@@ -47,6 +49,7 @@
             </a>
             <nav class="nav-links">
                 <a href="{{ route($module['route_prefix'].'.home') }}">Site public</a>
+                @if (Route::has($module['route_prefix'].'.admission'))<a href="{{ route($module['route_prefix'].'.admission') }}">Admission</a>@endif
                 @if (Route::has($module['portal_route']))<a href="{{ route($module['portal_route']) }}">Portail</a>@endif
                 @if (Route::has($module['erp_route']))<a href="{{ route($module['erp_route']) }}">ERP</a>@endif
                 <a href="{{ $module['api_path'] }}">API</a>
