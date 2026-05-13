@@ -5,6 +5,7 @@ namespace Modules\School\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\School\Database\Factories\AcademicProgramFactory;
 
 class AcademicProgram extends Model
@@ -35,6 +36,11 @@ class AcademicProgram extends Model
             'settings' => 'array',
             'is_public' => 'boolean',
         ];
+    }
+
+    public function classes(): HasMany
+    {
+        return $this->hasMany(SchoolClass::class);
     }
 
     protected static function newFactory(): Factory
