@@ -30,5 +30,7 @@ class DatabaseSeeder extends Seeder
         $admin->assignRole('super-admin');
 
         User::factory(5)->create();
+
+        $this->call(\Modules\School\Database\Seeders\SchoolDatabaseSeeder::class);
     }
 }

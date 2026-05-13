@@ -10,6 +10,11 @@ use Modules\School\Http\Requests\StoreAcademicProgramRequest;
 use Modules\School\Http\Requests\UpdateAcademicProgramRequest;
 use Modules\School\Http\Resources\AcademicProgramResource;
 use Modules\School\Models\AcademicProgram;
+use Modules\School\Models\Enrollment;
+use Modules\School\Models\Grade;
+use Modules\School\Models\SchoolClass;
+use Modules\School\Models\Student;
+use Modules\School\Models\Teacher;
 use Modules\School\Services\AcademicProgramService;
 
 class SchoolController extends Controller
@@ -34,7 +39,20 @@ class SchoolController extends Controller
 
     public function erp()
     {
-        return view('school::erp', $this->service->erpData());
+        $data = $this->service->erpData();
+
+        // Eager load classes for the program table
+        $data['records']->load('classes');
+
+        $data['globalStats'] = [
+            'students'    => Student::count(),
+            'teachers'    => Teacher::count(),
+            'classes'     => SchoolClass::count(),
+            'enrollments' => Enrollment::count(),
+            'grades'      => Grade::count(),
+        ];
+
+        return view('school::erp', $data);
     }
 
     public function store(StoreAcademicProgramRequest $request): AcademicProgramResource
@@ -72,3 +90,4 @@ class SchoolController extends Controller
         return response()->json(['message' => 'Deleted']);
     }
 }
+
