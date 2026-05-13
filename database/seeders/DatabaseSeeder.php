@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\School\Database\Seeders\SchoolDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,5 +31,7 @@ class DatabaseSeeder extends Seeder
         $admin->assignRole('super-admin');
 
         User::factory(5)->create();
+
+        $this->call(SchoolDatabaseSeeder::class);
     }
 }

@@ -16,13 +16,20 @@
     <section class="panel">
         <h2 style="margin-top:0;">Accès rapides</h2>
         <div class="card-grid">
-            @foreach($records as $record)
+            @forelse($records as $record)
                 <article class="card">
                     <h3>{{ $record->name }}</h3>
                     <p class="muted">{{ $record->headline }}</p>
+                    <p><strong>Niveau:</strong> {{ ucfirst($record->level) }} · <strong>Durée:</strong> {{ $record->duration_months }} mois</p>
+                    <p><strong>Admissions:</strong> {{ $record->admission_open ? 'Ouvertes' : 'Fermées' }}</p>
                     <p>{{ $record->description }}</p>
                 </article>
-            @endforeach
+            @empty
+                <article class="card">
+                    <h3>Aucun accès rapide</h3>
+                    <p class="muted">Aucun programme public disponible pour le moment.</p>
+                </article>
+            @endforelse
         </div>
     </section>
 </x-school::layouts.master>

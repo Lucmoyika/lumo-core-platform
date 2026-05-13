@@ -20,21 +20,24 @@ class SchoolController extends Controller
 
     public function index(Request $request)
     {
+        $filters = $this->extractFilters($request);
+        $perPage = max(1, min(100, $request->integer('per_page', 12)));
+
         if ($request->expectsJson() || $request->is('api/*')) {
-            return AcademicProgramResource::collection($this->service->paginate($request->integer('per_page', 12)));
+            return AcademicProgramResource::collection($this->service->paginate($perPage, $filters));
         }
 
-        return view('school::index', $this->service->publicData());
+        return view('school::index', $this->service->publicData($filters));
     }
 
-    public function portal()
+    public function portal(Request $request)
     {
-        return view('school::portal', $this->service->portalData(Auth::user()));
+        return view('school::portal', $this->service->portalData(Auth::user(), $this->extractFilters($request)));
     }
 
-    public function erp()
+    public function erp(Request $request)
     {
-        return view('school::erp', $this->service->erpData());
+        return view('school::erp', $this->service->erpData($this->extractFilters($request)));
     }
 
     public function store(StoreAcademicProgramRequest $request): AcademicProgramResource
@@ -47,12 +50,13 @@ class SchoolController extends Controller
     public function show(Request $request, int $id)
     {
         $record = $this->service->findOrFail($id);
+        $filters = $this->extractFilters($request);
 
         if ($request->expectsJson() || $request->is('api/*')) {
             return new AcademicProgramResource($record);
         }
 
-        return view('school::index', array_merge($this->service->publicData(), ['focusRecord' => $record]));
+        return view('school::index', array_merge($this->service->publicData($filters), ['focusRecord' => $record]));
     }
 
     public function update(UpdateAcademicProgramRequest $request, int $id): AcademicProgramResource
@@ -70,5 +74,15 @@ class SchoolController extends Controller
         $this->service->delete($id);
 
         return response()->json(['message' => 'Deleted']);
+    }
+
+    protected function extractFilters(Request $request): array
+    {
+        return [
+            'q' => $request->string('q')->toString(),
+            'status' => $request->string('status')->toString(),
+            'level' => $request->string('level')->toString(),
+            'admission_open' => $request->query('admission_open'),
+        ];
     }
 }

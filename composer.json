@@ -29,6 +29,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
+            "Modules\\School\\Database\\Factories\\": "Modules/School/database/factories/",
+            "Modules\\School\\Database\\Seeders\\": "Modules/School/database/seeders/",
             "Modules\\Analytics\\": "Modules/Analytics/app/",
             "Modules\\Communication\\": "Modules/Communication/app/",
             "Modules\\Companies\\": "Modules/Companies/app/",
