@@ -57,6 +57,26 @@ class Enrollment extends Model
         return $this->hasMany(Attendance::class);
     }
 
+    public function reportCards(): HasMany
+    {
+        return $this->hasMany(ReportCard::class);
+    }
+
+    public function feePayments(): HasMany
+    {
+        return $this->hasMany(FeePayment::class);
+    }
+
+    public function disciplines(): HasMany
+    {
+        return $this->hasMany(Discipline::class);
+    }
+
+    public function examMarks(): HasMany
+    {
+        return $this->hasMany(ExamMark::class);
+    }
+
     public function getFeeBalanceAttribute(): float
     {
         return (float) $this->fee_amount - (float) $this->fee_paid;

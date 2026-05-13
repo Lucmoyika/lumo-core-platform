@@ -48,6 +48,16 @@ class SchoolClass extends Model
             ->withTimestamps();
     }
 
+    public function timetables(): HasMany
+    {
+        return $this->hasMany(Timetable::class);
+    }
+
+    public function exams(): HasMany
+    {
+        return $this->hasMany(Exam::class);
+    }
+
     public function getFullNameAttribute(): string
     {
         return $this->name . ($this->section ? ' - ' . $this->section : '');
