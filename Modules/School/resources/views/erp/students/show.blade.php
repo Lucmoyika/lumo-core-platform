@@ -45,6 +45,8 @@
                     <p class="muted" style="margin:.25rem 0 0;">{{ $enrollment->schoolClass->academicProgram->name ?? '' }} · Salle {{ $enrollment->schoolClass->room }}</p>
                 </div>
                 <div style="text-align:right;">
+                    <a class="badge" href="{{ route('school.erp.report-cards.show', ['enrollmentId' => $enrollment->id]) }}">Bulletin</a>
+                    <div class="muted" style="font-size:.8rem;">Présence: {{ $enrollment->attendance_rate }}%</div>
                     <div class="muted" style="font-size:.8rem;">Frais scolaires</div>
                     <strong>{{ number_format($enrollment->fee_paid, 0, ',', ' ') }} / {{ number_format($enrollment->fee_amount, 0, ',', ' ') }} {{ $enrollment->fee_currency }}</strong>
                     @if($enrollment->fee_balance > 0)

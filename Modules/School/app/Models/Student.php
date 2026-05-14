@@ -5,6 +5,7 @@ namespace Modules\School\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\School\Database\Factories\StudentFactory;
 
@@ -40,6 +41,18 @@ class Student extends Model
     public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
+    }
+
+    public function admissions(): HasMany
+    {
+        return $this->hasMany(Admission::class);
+    }
+
+    public function parents(): BelongsToMany
+    {
+        return $this->belongsToMany(ParentGuardian::class, 'school_parent_student', 'student_id', 'parent_id')
+            ->withPivot('relationship')
+            ->withTimestamps();
     }
 
     public function getFullNameAttribute(): string

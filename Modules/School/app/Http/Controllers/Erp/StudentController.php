@@ -38,7 +38,13 @@ class StudentController extends Controller
 
     public function show(int $id)
     {
-        $student = Student::with(['enrollments.schoolClass.academicProgram', 'enrollments.grades'])->findOrFail($id);
+        $student = Student::with([
+            'enrollments.schoolClass.academicProgram',
+            'enrollments.grades',
+            'enrollments.attendances',
+            'enrollments.reportCards',
+            'enrollments.invoices',
+        ])->findOrFail($id);
         $module = \App\Support\Modules\ModuleRegistry::find('school');
 
         return view('school::erp.students.show', compact('student', 'module'));

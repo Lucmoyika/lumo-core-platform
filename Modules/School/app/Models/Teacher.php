@@ -48,6 +48,17 @@ class Teacher extends Model
         return $this->hasMany(Grade::class);
     }
 
+    public function subjectsRelation(): BelongsToMany
+    {
+        return $this->belongsToMany(Subject::class, 'school_teacher_subject')
+            ->withTimestamps();
+    }
+
+    public function timetableEntries(): HasMany
+    {
+        return $this->hasMany(TimetableEntry::class);
+    }
+
     public function getFullNameAttribute(): string
     {
         return $this->first_name . ' ' . $this->last_name;
