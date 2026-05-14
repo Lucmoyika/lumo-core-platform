@@ -17,6 +17,7 @@ class Grade extends Model
     protected $fillable = [
         'enrollment_id',
         'teacher_id',
+        'exam_id',
         'subject',
         'period',
         'score',
@@ -43,6 +44,11 @@ class Grade extends Model
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class);
+    }
+
+    public function exam(): BelongsTo
+    {
+        return $this->belongsTo(Exam::class);
     }
 
     public function getPercentageAttribute(): float

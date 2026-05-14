@@ -19,6 +19,26 @@
     <section class="panel" style="margin-bottom:1.5rem;">
         <h2 style="margin-top:0;">Modules ERP</h2>
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem;">
+            <a href="{{ route('school.erp.dashboard.admin') }}" class="erp-card">
+                <span style="font-size:2rem;">📈</span>
+                <strong>Dashboard Admin</strong>
+                <span class="muted">Vue globale KPI & workflow</span>
+            </a>
+            <a href="{{ route('school.erp.dashboard.teacher') }}" class="erp-card">
+                <span style="font-size:2rem;">👨‍🏫</span>
+                <strong>Dashboard Enseignant</strong>
+                <span class="muted">Cours du jour et saisie notes</span>
+            </a>
+            <a href="{{ route('school.erp.dashboard.student') }}" class="erp-card">
+                <span style="font-size:2rem;">🎒</span>
+                <strong>Dashboard Élève</strong>
+                <span class="muted">Emploi du temps, notes, présence</span>
+            </a>
+            <a href="{{ route('school.erp.dashboard.parent') }}" class="erp-card">
+                <span style="font-size:2rem;">👨‍👩‍👧‍👦</span>
+                <strong>Dashboard Parent</strong>
+                <span class="muted">Enfants, paiements, résultats</span>
+            </a>
             <a href="{{ route('school.erp.students') }}" class="erp-card">
                 <span style="font-size:2rem;">👩‍🎓</span>
                 <strong>Élèves</strong>
@@ -33,6 +53,16 @@
                 <span style="font-size:2rem;">🏫</span>
                 <strong>Classes</strong>
                 <span class="muted">{{ $globalStats['classes'] }} classes</span>
+            </a>
+            <a href="{{ route('school.erp.timetable') }}" class="erp-card">
+                <span style="font-size:2rem;">🗓️</span>
+                <strong>Emploi du temps</strong>
+                <span class="muted">Planning hebdomadaire & conflits</span>
+            </a>
+            <a href="{{ route('school.erp.fees') }}" class="erp-card">
+                <span style="font-size:2rem;">💰</span>
+                <strong>Frais scolaires</strong>
+                <span class="muted">Factures, paiements, alertes</span>
             </a>
             <a href="{{ $module['api_path'] }}" class="erp-card">
                 <span style="font-size:2rem;">🔌</span>

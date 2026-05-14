@@ -48,6 +48,23 @@ class SchoolClass extends Model
             ->withTimestamps();
     }
 
+    public function subjects(): BelongsToMany
+    {
+        return $this->belongsToMany(Subject::class, 'school_class_subject_teacher')
+            ->withPivot('teacher_id')
+            ->withTimestamps();
+    }
+
+    public function timetableEntries(): HasMany
+    {
+        return $this->hasMany(TimetableEntry::class);
+    }
+
+    public function exams(): HasMany
+    {
+        return $this->hasMany(Exam::class);
+    }
+
     public function getFullNameAttribute(): string
     {
         return $this->name . ($this->section ? ' - ' . $this->section : '');

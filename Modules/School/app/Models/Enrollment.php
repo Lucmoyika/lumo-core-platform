@@ -57,6 +57,35 @@ class Enrollment extends Model
         return $this->hasMany(Attendance::class);
     }
 
+    public function reportCards(): HasMany
+    {
+        return $this->hasMany(ReportCard::class);
+    }
+
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function getAttendanceRateAttribute(): float
+    {
+        $total = $this->attendances()->count();
+        if ($total === 0) {
+            return 0;
+        }
+
+        $present = $this->attendances()->where('status', 'present')->count();
+
+        return round(($present / $total) * 100, 1);
+    }
+
+    public function getAverageMarkAttribute(): float
+    {
+        $avg = $this->grades()->selectRaw('AVG((score / NULLIF(max_score, 0)) * 100) as avg_pct')->value('avg_pct');
+
+        return round((float) ($avg ?? 0), 2);
+    }
+
     public function getFeeBalanceAttribute(): float
     {
         return (float) $this->fee_amount - (float) $this->fee_paid;
